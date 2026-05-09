@@ -1,6 +1,7 @@
 package com.sky.controller.admin;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
@@ -8,6 +9,7 @@ import com.sky.result.Result;
 import com.sky.service.EmployeeService;
 import com.sky.utils.JwtUtil;
 import com.sky.vo.EmployeeLoginVO;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,4 +73,19 @@ public class EmployeeController {
         return Result.success();
     }
 
+    /**
+     * 新增员工
+     *
+     * @param employeeDTO
+     * @return
+     */
+    @PostMapping  // Post请求
+    @ApiOperation("新增员工") // 添加接口描述
+    public Result save(@RequestBody EmployeeDTO employeeDTO) { // @RequestBody 将post请求的json数据转为EmployeeDTO对象
+        log.info("新增员工{}",employeeDTO);
+        // 调用service保存员工数据
+        employeeService.save(employeeDTO);
+        // 返回结果
+        return Result.success();
+    }
 }

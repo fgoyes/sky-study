@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Employee implements Serializable {
+public class Employee implements Serializable { // 拷贝EmployeeDTO的属性，进行逻辑处理，执行sql操作
 
     private static final long serialVersionUID = 1L;
 

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class EmployeeDTO implements Serializable {
+public class EmployeeDTO implements Serializable { // 接收前端发送的参数，拷贝属性给Employee
 
     private Long id;
 
