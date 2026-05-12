@@ -6,6 +6,7 @@ import com.sky.entity.Employee;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface EmployeeMapper {
@@ -34,4 +35,13 @@ public interface EmployeeMapper {
      */
     // sql语句写入.xml射文件中
     Page<Employee> pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
+
+
+    // 创建可复用的sql方法，update set status/name/... = ? where id = ?
+    /**
+     * 修改状态
+     * @param employee
+     */
+    // sql语句写入.xml射文件中
+    void update(Employee employee);
 }

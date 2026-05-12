@@ -113,5 +113,16 @@ public class EmployeeController {
      * @param id
      * @return
      */
+    @PostMapping("/status/{status}") // post请求，添加接口路径，路径参数参数传递status状态，地址栏传输参数传递员工id
+    @ApiOperation("启用禁用员工账号")
+    public Result startOrStop(@PathVariable Integer status, Long id) { // @PathVariable注解将路径参数绑定到方法参数中
+        // 打印日志
+        log.info("启用禁用员工账号：{}，{}", status, id);
 
+        // 调用service方法
+        employeeService.startOrStop(status, id);
+
+        // 返回结果
+        return Result.success();
+    }
 }

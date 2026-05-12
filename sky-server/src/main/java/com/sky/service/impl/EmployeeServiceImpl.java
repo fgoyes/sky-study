@@ -32,6 +32,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeMapper employeeMapper;
+    @Autowired
+    private EmployeeService employeeService;
 
     /**
      * 员工登录
@@ -135,5 +137,25 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         // 返回结果
         return new PageResult(total,records);
+    }
+
+    /**
+     * 启用禁用员工账号
+     *
+     * @param status
+     * @param id
+     */
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        // 创建可复用的sql方法，update set status/name/... = ? where id = ?
+
+        // 创建实体类对象（封装状态与id的值）
+        Employee employee = Employee.builder()
+                .id(id)
+                .status(status)
+                .build();
+
+        // 设置员工状态
+        employeeMapper.update(employee);
     }
 }
