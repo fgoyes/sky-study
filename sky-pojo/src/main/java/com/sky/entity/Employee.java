@@ -32,6 +32,7 @@ public class Employee implements Serializable { // 拷贝EmployeeDTO的属性，
 
     private Integer status;
 
+    // 设置数据格式
     //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 

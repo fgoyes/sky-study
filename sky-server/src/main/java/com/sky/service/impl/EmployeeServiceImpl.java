@@ -1,23 +1,31 @@
 package com.sky.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.PasswordConstant;
 import com.sky.constant.StatusConstant;
 import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
+import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
 import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
+import com.sky.result.PageResult;
+import com.sky.result.Result;
 import com.sky.service.EmployeeService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -95,4 +103,37 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeMapper.insert(employee);
     }
 
+    /**
+     * 分页查询
+     *
+     * @param employeePageQueryDTO
+     * @return
+     */
+    @Override
+    public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
+        //  pageHelper分页插件
+        //  pageHelper会通过threadlocal线程存储页码和页数，自动为sql操作添加limit查询操作，sql操作只需要查询select from employee;基础信息即可
+        PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
+
+        // 调用分页查询方法
+        // ！！！Page 类是来自 PageHelper 分页插件的类，
+        // 它继承自 ArrayList，用于存储当前页的数据列表，
+        // 同时包含分页相关的元数据信息。
+//        pageNum (int) - 当前页码
+//        pageSize (int) - 每页显示的记录数
+//        total (long) - 总记录数
+//        pages (int) - 总页数
+//        size (int) - 当前页的实际记录数
+//        ...
+        Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
+
+        // 获取总记录数
+        long total = page.getTotal();
+
+        // 获取当前页的数据
+        List<Employee>  records = page.getResult();
+
+        // 返回结果
+        return new PageResult(total,records);
+    }
 }
