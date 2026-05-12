@@ -158,4 +158,35 @@ public class EmployeeServiceImpl implements EmployeeService {
         // 设置员工状态
         employeeMapper.update(employee);
     }
+
+    /**
+     * 根据id查询员工信息
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Employee getById(Integer id) {
+        return employeeMapper.getById(id);
+    }
+
+    /**
+     * 编辑员工信息
+     *
+     * @param employeeDTO
+     */
+    @Override
+    public void update(EmployeeDTO employeeDTO) {
+        // 创建员工对象
+        Employee employee = new Employee();
+
+        // 属性拷贝（spring中的工具类）左拷贝到右
+        BeanUtils.copyProperties(employeeDTO, employee);
+
+        // 设置当前时间为创建时间和修改时间
+        employee.setCreateTime(LocalDateTime.now());
+        employee.setUpdateTime(LocalDateTime.now());
+
+        employeeMapper.update(employee);
+    }
 }

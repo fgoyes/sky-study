@@ -125,4 +125,36 @@ public class EmployeeController {
         // 返回结果
         return Result.success();
     }
+
+    /**
+     * 根据id查询员工信息
+     *
+     * @param id
+     * @return
+     */
+    // GET请求，添加接口路径，路径参数参数传递员工id
+    // 用于修改员工信息时的查询回显
+    @GetMapping("/{id}")
+    @ApiOperation("查询员工信息")
+    public Result<Employee> getById(@PathVariable Integer id) { // @PathVariable注解将路径参数绑定到方法参数中
+        log.info("查询员工信息{}", id);
+
+        Employee employee = employeeService.getById(id);
+
+        return Result.success(employee);
+    }
+
+    /**
+     * 编辑员工信息
+     *
+     * @param employeeDTO
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("编辑员工信息")
+    public Result updateById(@RequestBody EmployeeDTO employeeDTO) { // @RequestBody将post请求的json数据转为EmployeeDTO对象
+        log.info("编辑员工信息{}", employeeDTO);
+        employeeService.update(employeeDTO);
+        return Result.success();
+    }
 }

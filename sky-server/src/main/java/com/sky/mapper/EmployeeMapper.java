@@ -44,4 +44,12 @@ public interface EmployeeMapper {
      */
     // sql语句写入.xml射文件中
     void update(Employee employee);
+
+    /**
+     * 根据id查询员工信息
+     * @param id
+     * @return
+     */
+    @Select("select * from employee where id = #{id}")
+    public Employee getById(Integer id);
 }
